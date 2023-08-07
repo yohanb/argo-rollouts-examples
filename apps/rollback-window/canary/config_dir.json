@@ -1,0 +1,13 @@
+{
+  "appName": "rollback-window",
+  "userGivenName": "rollback-window",
+  "destNamespace": "canary",
+  "destServer": "https://kubernetes.default.svc",
+  "srcPath": "rollback-window",
+  "srcRepoURL": ".git",
+  "srcTargetRevision": "",
+  "labels": null,
+  "annotations": null,
+  "exclude": "",
+  "include": ""
+}
