@@ -3,3 +3,7 @@ kind: Kustomization
 
 resources:
   - https://raw.githubusercontent.com/argoproj/argo-rollouts/master/manifests/install.yaml
+
+images:
+  - name: quay.io/argoproj/kubectl-argo-rollouts
+    newTag: v1.5.1

@@ -2,4 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - https://github.com/argoproj/argo-rollouts/tree/master/manifests/dashboard-install
+  - https://raw.githubusercontent.com/argoproj/argo-rollouts/master/manifests/dashboard-install.yaml
+
+images:
+  - name: quay.io/argoproj/kubectl-argo-rollouts
+    newTag: v1.5.1
