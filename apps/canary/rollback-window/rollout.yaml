@@ -22,7 +22,7 @@ spec:
           command: [ 'sh', '-c', 'echo Simulating a slow startup time... && sleep 10' ]
       containers:
       - name: canary-demo
-        image: argoproj/rollouts-demo:purple
+        image: argoproj/rollouts-demo:green
         imagePullPolicy: Always
         ports:
         - name: http
