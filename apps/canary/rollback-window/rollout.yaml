@@ -40,7 +40,7 @@ spec:
       canaryService: canary-demo-preview
       stableService: canary-demo-stable
       scaleDownDelaySeconds: 3600
-      scaleDownDelayRevisionLimit: 2
+      scaleDownDelayRevisionLimit: 1
       trafficRouting:
         nginx:
           stableIngress: canary-demo
