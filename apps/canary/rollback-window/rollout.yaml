@@ -16,14 +16,10 @@ spec:
       labels:
         app: canary-demo
     spec:
-#      initContainers:
-#        - name: sleep
-#          image: busybox:1.28
-#          command: [ 'sh', '-c', 'echo Simulating a slow startup time... && sleep 10' ]
       containers:
       - name: canary-demo
-        image: argoproj/rollouts-demo:blue
-        imagePullPolicy: Always
+        image: ybelval/rollouts-demo:blue
+        imagePullPolicy: Never
         ports:
         - name: http
           containerPort: 8080
@@ -32,6 +28,14 @@ spec:
           requests:
             memory: 32Mi
             cpu: 5m
+        startupProbe: # sleep between 15 and 30 seconds
+          exec:
+            command:
+              - bash
+              - -c
+              - |- 
+                sleep $(( (RANDOM % 15) + 15 ))
+          timeoutSeconds: 30
   strategy:
     canary:
       canaryService: canary-demo-preview
