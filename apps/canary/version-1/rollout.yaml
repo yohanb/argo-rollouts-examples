@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: app-gate
+  name: v1-app-gate
   annotations:
     argocd.argoproj.io/sync-wave: '90'
 spec:
@@ -9,16 +9,16 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: app-gate
+      app.kubernetes.io/component: v1
+      app.kubernetes.io/name: app-gate
   template:
     metadata:
       labels:
-        app: app-gate
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: canary
+        app.kubernetes.io/component: v1
+        app.kubernetes.io/name: app-gate
     spec:
       containers:
-      - name: app-gate
+      - name: v1-app-gate
         image: ybelval/rollouts-demo:green
         imagePullPolicy: Never
         ports:
@@ -49,7 +49,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: app
+  name: v1-app
   annotations:
     argocd.argoproj.io/sync-wave: '100'
 spec:
@@ -57,16 +57,16 @@ spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: app
+      app.kubernetes.io/component: v1
+      app.kubernetes.io/name: app
   template:
     metadata:
       labels:
-        app: app
-        app.kubernetes.io/component: app
-        app.kubernetes.io/name: canary
+        app.kubernetes.io/component: v1
+        app.kubernetes.io/name: app
     spec:
       containers:
-        - name: app
+        - name: v1-app
           image: ybelval/rollouts-demo:green
           imagePullPolicy: Never
           ports:

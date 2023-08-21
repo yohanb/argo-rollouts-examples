@@ -1,28 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: v2-app-gate
+  name: v-proto
   annotations:
     argocd.argoproj.io/sync-wave: '90'
 spec:
-  replicas: 1
+  replicas: 10
   revisionHistoryLimit: 1
-  rollbackWindow:
+  rollbackWindow: # https://argo-rollouts.readthedocs.io/en/stable/features/rollback/
     revisions: 1
   selector:
     matchLabels:
-      app.kubernetes.io/component: v2
-      app.kubernetes.io/name: app-gate
+      app.kubernetes.io/component: v-proto
+      app.kubernetes.io/name: app
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: v2
-        app.kubernetes.io/name: app-gate
-        container/version: green
+        app.kubernetes.io/component: v-proto
+        app.kubernetes.io/name: app
     spec:
       containers:
-      - name: v2-app-gate
-        image: ybelval/rollouts-demo:green
+      - name: v-proto
+        image: ybelval/rollouts-demo:purple
         imagePullPolicy: Never
         ports:
         - name: http
@@ -42,38 +41,47 @@ spec:
           timeoutSeconds: 30
   strategy:
     canary:
-      maxSurge: 25%
-      maxUnavailable: 0
+      canaryService: v-proto-preview
+      stableService: v-proto-stable
+      scaleDownDelaySeconds: 3600
+      scaleDownDelayRevisionLimit: 1
+      trafficRouting:
+        nginx:
+          stableIngress: v-proto
       steps:
-      - setWeight: 90
-      - pause: {duration: 10}
+      - setCanaryScale: # scale replicaset to 100% without receiving any traffic
+          weight: 100
+      - setWeight: 20
       - pause: {}
+      - setWeight: 40
+      - pause: {duration: 10}
+      - setWeight: 60
+      - pause: {duration: 10}
+      - setWeight: 80
+      - pause: {duration: 10}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: v2-app
+  name: v-proto-other
   annotations:
     argocd.argoproj.io/sync-wave: '100'
 spec:
   replicas: 10
-  revisionHistoryLimit: 1
-  rollbackWindow:
-    revisions: 1
+  revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app.kubernetes.io/component: v2
+      app.kubernetes.io/component: v-proto-other
       app.kubernetes.io/name: app
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: v2
+        app.kubernetes.io/component: v-proto-other
         app.kubernetes.io/name: app
-        container/version: green
     spec:
       containers:
-        - name: v2-app
-          image: ybelval/rollouts-demo:green
+        - name: v-proto-other
+          image: ybelval/rollouts-demo:purple
           imagePullPolicy: Never
           ports:
             - name: http
@@ -93,13 +101,6 @@ spec:
             timeoutSeconds: 30
   strategy:
     canary:
-      canaryService: v2-app-canary
-      stableService: v2-app-stable
-      scaleDownDelaySeconds: 3600 # requires canaryService and stableService
-      scaleDownDelayRevisionLimit: 1
-      trafficRouting:
-        nginx:
-          stableIngress: v2-app
       maxSurge: 25%
       maxUnavailable: 0
       steps:
