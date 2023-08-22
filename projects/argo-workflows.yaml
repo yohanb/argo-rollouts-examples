@@ -50,3 +50,23 @@ spec:
       allowEmpty: true
       prune: true
       selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-workflows-templates
+  namespace: argocd
+spec:
+  source:
+    path: apps/argo-workflows-templates
+    repoURL: https://github.com/yohanb/argo-rollouts-examples.git
+    targetRevision: HEAD
+  project: argo-workflows
+  destination:
+    namespace: argo
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true

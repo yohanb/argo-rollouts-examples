@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: v-proto
-        image: ybelval/rollouts-demo:purple
+        image: ybelval/rollouts-demo:blue
         imagePullPolicy: Never
         ports:
         - name: http
@@ -31,13 +31,13 @@ spec:
           requests:
             memory: 32Mi
             cpu: 5m
-        startupProbe: # sleep between 15 and 30 seconds
-          exec:
-            command:
-              - bash
-              - -c
-              - |- 
-                sleep $(( (RANDOM % 15) + 15 ))
+#        startupProbe: # sleep between 15 and 30 seconds
+#          exec:
+#            command:
+#              - bash
+#              - -c
+#              - |-
+#                sleep $(( (RANDOM % 1) + 0 ))
           timeoutSeconds: 30
   strategy:
     canary:
@@ -67,7 +67,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '100'
 spec:
-  replicas: 10
+  replicas: 2
   revisionHistoryLimit: 0
   selector:
     matchLabels:
@@ -81,7 +81,7 @@ spec:
     spec:
       containers:
         - name: v-proto-other
-          image: ybelval/rollouts-demo:purple
+          image: ybelval/rollouts-demo:blue
           imagePullPolicy: Never
           ports:
             - name: http
@@ -91,14 +91,14 @@ spec:
             requests:
               memory: 32Mi
               cpu: 5m
-          startupProbe: # sleep between 15 and 30 seconds
-            exec:
-              command:
-                - bash
-                - -c
-                - |-
-                  sleep $(( (RANDOM % 15) + 15 ))
-            timeoutSeconds: 30
+#          startupProbe: # sleep between 15 and 30 seconds
+#            exec:
+#              command:
+#                - bash
+#                - -c
+#                - |-
+#                  sleep $(( (RANDOM % 1) + 0 ))
+#            timeoutSeconds: 30
   strategy:
     canary:
       maxSurge: 25%
