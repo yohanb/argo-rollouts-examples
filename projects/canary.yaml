@@ -36,7 +36,7 @@ spec:
     - git:
         directories:
           - path: apps/canary/*
-        repoURL: https://github.com/yohanb/argo-rollouts-examples.git
+        repoURL: https://github.com/amazingandyyy/argo-rollouts-examples.git
         revision: HEAD
   syncPolicy: {}
   template:
@@ -50,7 +50,7 @@ spec:
       project: canary
       source:
         path: '{{ path }}'
-        repoURL: https://github.com/yohanb/argo-rollouts-examples.git
+        repoURL: https://github.com/amazingandyyy/argo-rollouts-examples.git
         targetRevision: HEAD
       destination:
         namespace: canary
