@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: v2-app
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: v2.dev.argoproj.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: v2-app-stable
+            port:
+              name: http

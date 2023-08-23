@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: canary-demo
+  name: bluegreen-demo
 spec:
   replicas: 3
   revisionHistoryLimit: 1
@@ -10,18 +10,18 @@ spec:
     revisions: 1
   selector:
     matchLabels:
-      app: canary-demo
+      app: bluegreen-demo
   template:
     metadata:
       labels:
-        app: canary-demo
+        app: bluegreen-demo
     spec:
       initContainers:
         - name: sleep
           image: busybox:1.28
           command: [ 'sh', '-c', 'echo Simulating a slow startup time... && sleep 10' ]
       containers:
-      - name: canary-demo
+      - name: bluegreen-demo
         image: argoproj/rollouts-demo:yellow
         imagePullPolicy: Always
         ports:
@@ -33,20 +33,8 @@ spec:
             memory: 32Mi
             cpu: 5m
   strategy:
-    canary:
-      canaryService: canary-demo-preview
-      stableService: canary-demo-stable
+    blueGreen:
+      previewService: bluegreen-demo-preview
+      activeService: bluegreen-demo-stable
       scaleDownDelaySeconds: 3600
       scaleDownDelayRevisionLimit: 1
-      trafficRouting:
-        nginx:
-          stableIngress: canary-demo
-      steps:
-      - setWeight: 20
-      - pause: {}
-      - setWeight: 40
-      - pause: {duration: 10}
-      - setWeight: 60
-      - pause: {duration: 10}
-      - setWeight: 80
-      - pause: {duration: 10}

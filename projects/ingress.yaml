@@ -37,6 +37,13 @@ spec:
     targetRevision: 4.7.1
     helm:
       releaseName: ingress-nginx
+#      valuesObject:
+#        controller:
+#          service:
+#            internal:
+#              enabled: true
+#              annotations:
+#                ingress-nginx-internal: "true"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: ingress-nginx
