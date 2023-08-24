@@ -1,0 +1,79 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  annotations:
+    argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
+    argocd.argoproj.io/sync-options: PruneLast=true
+    argocd.argoproj.io/sync-wave: "-2"
+  creationTimestamp: null
+  name: load-testing
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  description: load-testing project
+  destinations:
+    - namespace: '*'
+      server: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  sourceRepos:
+    - '*'
+status: {}
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: load-locust
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    name: in-cluster
+    namespace: load-testing
+  project: load-testing
+  source:
+    chart: locust
+    repoURL: "https://charts.deliveryhero.io/"
+    targetRevision: 0.30.0
+    helm:
+      values: |-
+        loadtest:
+          locust_host: http://v-proto-stable.canary.svc.cluster.local
+          locust_locustfile_configmap: api-locustfile
+        master:
+          args:
+            -  --class-picker
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
+---
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-locustfile
+  namespace: load-testing
+data:
+  main.py: |
+    # -*- coding: utf-8 -*-
+
+    from locust import HttpUser, task
+    
+    class Color(HttpUser):
+        @task
+        def color(self):
+            response = self.client.get("/color")
+            
+            # Extract the response data as a string
+            response_data = response.text
+
+            with open("response_data.log", "a") as f:
+                f.write(response_data + "\n")
