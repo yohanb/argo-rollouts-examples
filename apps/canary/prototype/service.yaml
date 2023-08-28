@@ -25,3 +25,31 @@ spec:
   selector:
     app.kubernetes.io/component: v-proto
     app.kubernetes.io/name: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: v-proto-other
+spec:
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/component: v-proto-other
+    app.kubernetes.io/name: app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: v-proto-other-1
+spec:
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/component: v-proto-other-1
+    app.kubernetes.io/name: app

@@ -106,3 +106,48 @@ spec:
       steps:
         - setWeight: 10
         - setWeight: 90
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: v-proto-other-1
+  annotations:
+    argocd.argoproj.io/sync-wave: '100'
+spec:
+  replicas: 2
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: v-proto-other-1
+      app.kubernetes.io/name: app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: v-proto-other-1
+        app.kubernetes.io/name: app
+    spec:
+      containers:
+        - name: v-proto-other-1
+          image: ybelval/rollouts-demo:blue
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 5m
+  #          startupProbe: # sleep between 15 and 30 seconds
+  #            exec:
+  #              command:
+  #                - bash
+  #                - -c
+  #                - |-
+  #                  sleep $(( (RANDOM % 1) + 0 ))
+  #            timeoutSeconds: 30
+  strategy:
+    blueGreen:
+      activeService: v-proto-other-1
+      scaleDownDelaySeconds: 3600
+      scaleDownDelayRevisionLimit: 1
