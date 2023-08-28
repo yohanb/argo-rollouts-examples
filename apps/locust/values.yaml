@@ -1,3 +1,11 @@
 loadtest:
   locust_host: http://v-proto-stable.canary.svc.cluster.local
   locust_locustfile_configmap: api-locustfile
+  pip_packages:
+    - newrelic
+    - requests
+  mount_external_secret:
+    mountPath: /home/locust
+    files:
+      newrelic-ini:
+        newrelic-ini: newrelic.ini

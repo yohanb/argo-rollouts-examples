@@ -3,17 +3,18 @@ kind: Kustomization
 
 namespace: locust
 
-#resources:
-#  - configmap.yaml
+resources:
+  - ingress.yaml
 
 helmCharts:
   - name: locust
     repo: https://charts.deliveryhero.io/
     version: 0.30.0
     releaseName: locust
+    valuesFile: values.yaml
 
 configMapGenerator:
   - name: api-locustfile
-    behavior: merge
+    behavior: create
     files:
       - main.py

@@ -23,38 +23,6 @@ spec:
     - '*'
 status: {}
 ---
-
-#apiVersion: argoproj.io/v1alpha1
-#kind: Application
-#metadata:
-#  name: load-locust
-#  annotations:
-#    argocd.argoproj.io/sync-wave: "2"
-#spec:
-#  destination:
-#    name: in-cluster
-#    namespace: load-testing
-#  project: load-testing
-#  source:
-#    chart: locust
-#    repoURL: "https://charts.deliveryhero.io/"
-#    targetRevision: 0.30.0
-#    helm:
-#      values: |-
-#        loadtest:
-#          locust_host: http://v-proto-stable.canary.svc.cluster.local
-#          locust_locustfile_configmap: api-locustfile
-#        master:
-#          args:
-#            -  --class-picker
-#
-#  syncPolicy:
-#    syncOptions:
-#      - CreateNamespace=true
-#    automated:
-#      prune: true
-#      selfHeal: true
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
