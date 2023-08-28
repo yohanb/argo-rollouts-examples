@@ -1,0 +1,3 @@
+loadtest:
+  locust_host: http://v-proto-stable.canary.svc.cluster.local
+  locust_locustfile_configmap: api-locustfile
