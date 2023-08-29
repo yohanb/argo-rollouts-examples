@@ -5,6 +5,7 @@ namespace: locust
 
 resources:
   - ingress.yaml
+  - newrelic-ini-sealed-secret.yaml
 
 helmCharts:
   - name: locust

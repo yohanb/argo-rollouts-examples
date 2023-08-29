@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Note: to use the kubeseal CLI without having to pass any additional arguments,
+# install the controller within the kube-system namespace and name it sealed-secrets-controller.
+helmCharts:
+  - name: sealed-secrets
+    repo: https://bitnami-labs.github.io/sealed-secrets
+    version: 2.8.2
+    releaseName: sealed-secrets
+    namespace: kube-system
+    includeCRDs: true
+    valuesInline:
+      fullnameOverride: sealed-secrets-controller

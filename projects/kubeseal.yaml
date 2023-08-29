@@ -6,13 +6,13 @@ metadata:
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: "-2"
   creationTimestamp: null
-  name: nginx
+  name: kubeseal
   namespace: argocd
 spec:
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-  description: nginx project
+  description: kubeseal project
   destinations:
     - namespace: '*'
       server: '*'
@@ -26,20 +26,18 @@ status: {}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx
+  name: kubeseal
   namespace: argocd
 spec:
   source:
-    path: apps/nginx
+    path: apps/kubeseal
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
     targetRevision: HEAD
-  project: nginx
+  project: kubeseal
   destination:
-    namespace: ingress-nginx
+    namespace: kube-system
     server: https://kubernetes.default.svc
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
     automated:
       allowEmpty: true
       prune: true
