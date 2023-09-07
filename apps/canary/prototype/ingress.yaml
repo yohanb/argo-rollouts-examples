@@ -5,13 +5,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: proto.dev.argoproj.io
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: v-proto-stable
-            port:
-              name: http
+    - host: proto.dev.argoproj.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: v-proto-stable
+                port:
+                  name: http
