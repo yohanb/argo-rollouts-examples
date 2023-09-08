@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bluegreen-demo-stable
+  name: canary-prototype-stable
 spec:
   ports:
   - port: 80
@@ -9,12 +9,13 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: bluegreen-demo
+    app.kubernetes.io/component: canary
+    app.kubernetes.io/name: prototype
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: bluegreen-demo-preview
+  name: canary-prototype-preview
 spec:
   ports:
     - port: 80
@@ -22,4 +23,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: bluegreen-demo
+    app.kubernetes.io/component: canary
+    app.kubernetes.io/name: prototype

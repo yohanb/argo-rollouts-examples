@@ -6,13 +6,13 @@ metadata:
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: "-2"
   creationTimestamp: null
-  name: canary
+  name: prototype
   namespace: argocd
 spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  description: canary project
+  description: prototype project
   destinations:
   - namespace: '*'
     server: '*'
@@ -29,13 +29,13 @@ kind: ApplicationSet
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
-  name: canary
+  name: prototype
   namespace: argocd
 spec:
   generators:
     - git:
         directories:
-          - path: apps/canary/*
+          - path: apps/prototype/*
         repoURL: https://github.com/yohanb/argo-rollouts-examples.git
         revision: HEAD
   syncPolicy: {}
@@ -44,16 +44,16 @@ spec:
       labels:
         app.kubernetes.io/managed-by: argocd-autopilot
         app.kubernetes.io/name: 'canary'
-      name: canary-{{ path.basename }}
+      name: prototype-{{ path.basename }}
       namespace: argocd
     spec:
-      project: canary
+      project: prototype
       source:
         path: '{{ path }}'
         repoURL: https://github.com/yohanb/argo-rollouts-examples.git
         targetRevision: HEAD
       destination:
-        namespace: canary
+        namespace: prototype
         server: https://kubernetes.default.svc
       syncPolicy:
         syncOptions:

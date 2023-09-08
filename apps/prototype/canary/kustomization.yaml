@@ -3,5 +3,6 @@ kind: Kustomization
 
 resources:
 - service.yaml
-- ingress.yaml
+- gateway.yaml
+- http-route.yaml
 - rollout.yaml
