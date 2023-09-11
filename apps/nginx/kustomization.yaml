@@ -20,3 +20,29 @@ resources:
   - ./nginx-ingress/common/crds/k8s.nginx.org_policies.yaml
   - ./nginx-ingress/deployment/nginx-ingress.yaml
   - ./nginx-ingress/service/loadbalancer.yaml
+
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: nginx-ingress
+        labels:
+          istio-injection: enabled
+    target:
+      kind: Namespace
+      name: nginx-ingress
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nginx-ingress
+      spec:
+        template:
+          metadata:
+            annotations:
+              traffic.sidecar.istio.io/includeInboundPorts: ""
+              traffic.sidecar.istio.io/excludeInboundPorts: "80,443"
+    target:
+      kind: Deployment
+      name: nginx-ingress

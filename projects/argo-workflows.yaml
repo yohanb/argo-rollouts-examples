@@ -60,7 +60,7 @@ spec:
   source:
     path: apps/argo-workflows-templates
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: HEAD
+    targetRevision: istio
   project: argo-workflows
   destination:
     namespace: argo

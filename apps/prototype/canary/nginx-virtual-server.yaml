@@ -1,0 +1,21 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: canary-prototype
+spec:
+  host: proto.dev.argoproj.io
+  ingressClassName: nginx
+  upstreams:
+    - name: stable
+      service: canary-prototype-stable
+      port: 80
+      use-cluster-ip: true
+  routes:
+    - path: /
+      action:
+        proxy:
+          upstream: stable
+          requestHeaders:
+            set:
+              - name: Host
+                value: canary-prototype-stable.prototype.svc.cluster.local

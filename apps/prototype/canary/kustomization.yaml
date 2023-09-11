@@ -3,6 +3,6 @@ kind: Kustomization
 
 resources:
 - service.yaml
-- gateway.yaml
-- http-route.yaml
 - rollout.yaml
+- istio-virtual-service.yaml
+- nginx-virtual-server.yaml
