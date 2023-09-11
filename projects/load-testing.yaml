@@ -32,7 +32,7 @@ spec:
   source:
     path: apps/locust
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: HEAD
+    targetRevision: istio
   project: load-testing
   destination:
     namespace: locust

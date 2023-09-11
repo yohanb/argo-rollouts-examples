@@ -46,10 +46,11 @@ spec:
       scaleDownDelaySeconds: 3600
       scaleDownDelayRevisionLimit: 1
       trafficRouting:
-        plugins:
-          argoproj-labs/gatewayAPI:
-            httpRoute: canary-prototype # our created httproute
-            namespace: prototype # namespace where this rollout resides
+        istio:
+          virtualService:
+            name: canary-prototype   # required
+            routes:
+              - primary            # optional if there is a single route in VirtualService, required otherwise
       steps:
       - setWeight: 20
       - setCanaryScale: # scale replicaset to 100% with only 20% traffic

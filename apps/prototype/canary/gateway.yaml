@@ -1,11 +1,14 @@
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: web
 spec:
-  gatewayClassName: nginx
-  listeners:
-    - protocol: HTTP
-      port: 80
-      name: http
-      hostname: "*.dev.argoproj.io"
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        protocol: HTTP2
+        number: 80
+        name: http2
+      hosts:
+        - "*"

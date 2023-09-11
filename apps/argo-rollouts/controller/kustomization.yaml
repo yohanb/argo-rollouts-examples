@@ -7,17 +7,3 @@ resources:
 images:
   - name: quay.io/argoproj/argo-rollouts
     newTag: v1.6.0
-
-configMapGenerator:
-  - name: argo-rollouts-config
-    behavior: merge
-    files:
-      - trafficRouterPlugins
-
-patchesJson6902:
-  - target:
-      group: rbac.authorization.k8s.io
-      version: v1
-      kind: ClusterRole
-      name: argo-rollouts
-    path: patch-argo-rollouts-clusterrole.yaml

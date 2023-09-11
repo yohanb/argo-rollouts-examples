@@ -6,13 +6,13 @@ metadata:
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: "-2"
   creationTimestamp: null
-  name: gateway-api
+  name: istio
   namespace: argocd
 spec:
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-  description: gateway-api project
+  description: istio project
   destinations:
     - namespace: '*'
       server: '*'
@@ -26,20 +26,27 @@ status: {}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gateway-api
+  name: istio
   namespace: argocd
 spec:
   source:
-    path: apps/gateway-api
+    path: apps/istio
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: HEAD
-  project: gateway-api
+    targetRevision: istio
+  project: istio
   destination:
-    namespace: gateway-api
+    namespace: istio
     server: https://kubernetes.default.svc
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      name: istiod-default-validator
+      jsonPointers:
+        - /webhooks/0/failurePolicy
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
+      - RespectIgnoreDifferences=true
     automated:
       allowEmpty: true
       prune: true
