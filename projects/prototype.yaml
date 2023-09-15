@@ -37,7 +37,7 @@ spec:
         directories:
           - path: apps/prototype/*
         repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-        revision: istio
+        revision: linkerd
   syncPolicy: {}
   template:
     metadata:
@@ -51,7 +51,7 @@ spec:
       source:
         path: '{{ path }}'
         repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-        targetRevision: istio
+        targetRevision: linkerd
       destination:
         namespace: prototype
         server: https://kubernetes.default.svc

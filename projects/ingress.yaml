@@ -32,7 +32,7 @@ spec:
   source:
     path: apps/nginx
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: istio
+    targetRevision: linkerd
   project: nginx
   destination:
     namespace: ingress-nginx

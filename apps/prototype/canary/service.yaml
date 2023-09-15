@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: canary-prototype-stable
+  name: canary-web-stable
 spec:
   ports:
   - port: 80
@@ -9,13 +9,13 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app.kubernetes.io/component: canary
-    app.kubernetes.io/name: prototype
+    app.kubernetes.io/component: web
+    app.kubernetes.io/name: canary
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: canary-prototype-preview
+  name: canary-web-preview
 spec:
   ports:
     - port: 80
@@ -23,5 +23,33 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/component: canary
-    app.kubernetes.io/name: prototype
+    app.kubernetes.io/component: web
+    app.kubernetes.io/name: canary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-api-stable
+spec:
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/component: api
+    app.kubernetes.io/name: canary
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary-api-preview
+spec:
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/component: api
+    app.kubernetes.io/name: canary

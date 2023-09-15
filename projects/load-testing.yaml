@@ -23,24 +23,24 @@ spec:
     - '*'
 status: {}
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: locust
-  namespace: argocd
-spec:
-  source:
-    path: apps/locust
-    repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: istio
-  project: load-testing
-  destination:
-    namespace: locust
-    server: https://kubernetes.default.svc
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-    automated:
-      allowEmpty: true
-      prune: true
-      selfHeal: true
+#apiVersion: argoproj.io/v1alpha1
+#kind: Application
+#metadata:
+#  name: locust
+#  namespace: argocd
+#spec:
+#  source:
+#    path: apps/locust
+#    repoURL: https://github.com/yohanb/argo-rollouts-examples.git
+#    targetRevision: linkerd
+#  project: load-testing
+#  destination:
+#    namespace: locust
+#    server: https://kubernetes.default.svc
+#  syncPolicy:
+#    syncOptions:
+#      - CreateNamespace=true
+#    automated:
+#      allowEmpty: true
+#      prune: true
+#      selfHeal: true

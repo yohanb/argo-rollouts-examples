@@ -20,3 +20,18 @@ resources:
   - ./nginx-ingress/common/crds/k8s.nginx.org_policies.yaml
   - ./nginx-ingress/deployment/nginx-ingress.yaml
   - ./nginx-ingress/service/loadbalancer.yaml
+
+patches:
+  - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nginx-ingress
+      spec:
+        template:
+          metadata:
+            annotations:
+              linkerd.io/inject: "enabled"
+    target:
+      kind: Deployment
+      name: nginx-ingress

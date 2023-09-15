@@ -6,13 +6,13 @@ metadata:
     argocd.argoproj.io/sync-options: PruneLast=true
     argocd.argoproj.io/sync-wave: "-2"
   creationTimestamp: null
-  name: istio
+  name: linkerd
   namespace: argocd
 spec:
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
-  description: istio project
+  description: linkerd project
   destinations:
     - namespace: '*'
       server: '*'
@@ -26,27 +26,20 @@ status: {}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: istio
+  name: linkerd
   namespace: argocd
 spec:
   source:
-    path: apps/istio
+    path: apps/linkerd
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: istio
-  project: istio
+    targetRevision: linkerd
+  project: linkerd
   destination:
-    namespace: istio
+    namespace: linkerd
     server: https://kubernetes.default.svc
-  ignoreDifferences:
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
-      name: istiod-default-validator
-      jsonPointers:
-        - /webhooks/0/failurePolicy
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
-      - RespectIgnoreDifferences=true
     automated:
       allowEmpty: true
       prune: true

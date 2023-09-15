@@ -1,0 +1,16 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: canary-web
+spec:
+  host: proto.dev.argoproj.io
+  ingressClassName: nginx
+  upstreams:
+    - name: stable
+      service: canary-web-stable
+      port: 80
+      use-cluster-ip: true
+  routes:
+    - path: /
+      action:
+        pass: stable
