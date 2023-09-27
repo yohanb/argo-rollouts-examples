@@ -16,12 +16,14 @@ spec:
   template:
     metadata:
       labels:
+        app: prototype
+        version: blue
         app.kubernetes.io/component: canary
         app.kubernetes.io/name: prototype
     spec:
       containers:
       - name: rollouts-demo
-        image: ybelval/rollouts-demo:green
+        image: ybelval/rollouts-demo:blue
         imagePullPolicy: Never
         ports:
         - name: http

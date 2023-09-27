@@ -32,7 +32,7 @@ spec:
   source:
     path: apps/istio
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
-    targetRevision: istio
+    targetRevision: HEAD
   project: istio
   destination:
     namespace: istio
@@ -47,6 +47,28 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - RespectIgnoreDifferences=true
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kiali
+  namespace: argocd
+spec:
+  source:
+    path: apps/kiali
+    repoURL: https://github.com/yohanb/argo-rollouts-examples.git
+    targetRevision: HEAD
+  project: istio
+  destination:
+    namespace: istio
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
     automated:
       allowEmpty: true
       prune: true
