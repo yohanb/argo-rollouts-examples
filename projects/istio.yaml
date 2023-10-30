@@ -35,7 +35,7 @@ spec:
     targetRevision: HEAD
   project: istio
   destination:
-    namespace: istio
+    namespace: istio-system
     server: https://kubernetes.default.svc
   ignoreDifferences:
     - group: admissionregistration.k8s.io
@@ -64,7 +64,7 @@ spec:
     targetRevision: HEAD
   project: istio
   destination:
-    namespace: istio
+    namespace: kiali
     server: https://kubernetes.default.svc
   syncPolicy:
     syncOptions:

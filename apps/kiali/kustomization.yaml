@@ -1,27 +1,22 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: istio-system
-
-#resources:
-#  - sealed-secret-oidc.yaml
+namespace: kiali
 
 helmCharts:
-  - name: kiali-server
+  - name: kiali-operator
     repo: https://kiali.org/helm-charts
     version: 1.74.0
-    releaseName: kiali-server
-    namespace: istio-system
+    releaseName: kiali-operator
+    namespace: kiali
     includeCRDs: true
     valuesInline:
-      auth:
-        strategy: anonymous
-#        strategy: openid
-#        openid:
-#          client_id: "222415113304-jfd4naodvk7ttg20jd91f2f64kcm0n9q.apps.googleusercontent.com"
-#          disable_rbac: true
-#          issuer_uri: "https://accounts.google.com"
-#          scopes: ["openid", "email"]
-#          username_claim: "email"
-#          allowed_domains:
-#            - turo.com
+      cr:
+        create: true
+        namespace: istio-system
+        spec:
+          auth:
+            strategy: anonymous
+          istio_namespace: istio-system
+          deployment:
+            namespace: kiali
