@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: monitoring
+
+resources:
+  - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/main/bundle.yaml
+  - service-account.yaml
+  - cluster-role.yaml
+  - cluster-role-binding.yaml
+  - prometheus.yaml
+  - service.yaml

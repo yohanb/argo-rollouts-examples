@@ -3,8 +3,8 @@ kind: Kustomization
 
 namespace: istio-system
 
-resources:
-  - sealed-secret-oidc.yaml
+#resources:
+#  - sealed-secret-oidc.yaml
 
 helmCharts:
   - name: kiali-server
@@ -15,12 +15,13 @@ helmCharts:
     includeCRDs: true
     valuesInline:
       auth:
-        strategy: openid
-        openid:
-          client_id: "222415113304-jfd4naodvk7ttg20jd91f2f64kcm0n9q.apps.googleusercontent.com"
-          disable_rbac: true
-          issuer_uri: "https://accounts.google.com"
-          scopes: ["openid", "email"]
-          username_claim: "email"
-          allowed_domains:
-            - turo.com
+        strategy: anonymous
+#        strategy: openid
+#        openid:
+#          client_id: "222415113304-jfd4naodvk7ttg20jd91f2f64kcm0n9q.apps.googleusercontent.com"
+#          disable_rbac: true
+#          issuer_uri: "https://accounts.google.com"
+#          scopes: ["openid", "email"]
+#          username_claim: "email"
+#          allowed_domains:
+#            - turo.com
