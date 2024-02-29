@@ -7,7 +7,7 @@
 ## Bootstrap
 1. `EXPORT GIT_TOKEN=<your git token>`
 2. `export GIT_REPO=https://github.com/ybelval/argo-rollouts-examples`
-3. `argocd-autopilot repo bootstrap`
+3. `argocd-autopilot repo bootstrap` or `argocd-autopilot repo bootstrap --recover`
 
 ## Steps to reproduce
 1. `kubectl port-forward -n argo-rollouts svc/argo-rollouts-dashboard 3100:3100`
