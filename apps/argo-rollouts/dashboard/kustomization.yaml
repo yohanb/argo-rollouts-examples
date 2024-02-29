@@ -6,4 +6,4 @@ resources:
 
 images:
   - name: quay.io/argoproj/kubectl-argo-rollouts
-    newTag: v1.6.0
+    newTag: v1.6.6

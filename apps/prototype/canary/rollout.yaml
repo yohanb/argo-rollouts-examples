@@ -2,10 +2,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: canary
-  annotations:
-    argocd.argoproj.io/sync-wave: '90'
 spec:
-  replicas: 10
+  replicas: 3
   revisionHistoryLimit: 1
   rollbackWindow: # https://argo-rollouts.readthedocs.io/en/stable/features/rollback/
     revisions: 1
@@ -23,8 +21,7 @@ spec:
     spec:
       containers:
       - name: rollouts-demo
-        image: ybelval/rollouts-demo:blue
-        imagePullPolicy: Never
+        image: argoproj/rollouts-demo:red
         ports:
         - name: http
           containerPort: 8080
@@ -33,13 +30,6 @@ spec:
           requests:
             memory: 32Mi
             cpu: 5m
-#        startupProbe: # sleep between 15 and 30 seconds
-#          exec:
-#            command:
-#              - bash
-#              - -c
-#              - |-
-#                sleep $(( (RANDOM % 1) + 0 ))
           timeoutSeconds: 30
   strategy:
     canary:
