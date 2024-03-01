@@ -5,6 +5,7 @@ metadata:
 spec:
   replicas: 3
   revisionHistoryLimit: 1
+  progressDeadlineSeconds: 60
   rollbackWindow: # https://argo-rollouts.readthedocs.io/en/stable/features/rollback/
     revisions: 1
   selector:
@@ -15,13 +16,13 @@ spec:
     metadata:
       labels:
         app: prototype
-        version: blue
+        version: green
         app.kubernetes.io/component: canary
         app.kubernetes.io/name: prototype
     spec:
       containers:
       - name: rollouts-demo
-        image: argoproj/rollouts-demo:red
+        image: argoproj/rollouts-demo:green
         ports:
         - name: http
           containerPort: 8080
@@ -35,7 +36,7 @@ spec:
     canary:
       canaryService: canary-prototype-preview
       stableService: canary-prototype-stable
-      scaleDownDelaySeconds: 3600
+      scaleDownDelaySeconds: 120
       scaleDownDelayRevisionLimit: 1
       trafficRouting:
         istio:
