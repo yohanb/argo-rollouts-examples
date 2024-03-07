@@ -36,7 +36,7 @@ spec:
     canary:
       canaryService: canary-prototype-preview
       stableService: canary-prototype-stable
-      scaleDownDelaySeconds: 120
+      scaleDownDelaySeconds: 60
       scaleDownDelayRevisionLimit: 1
       trafficRouting:
         istio:

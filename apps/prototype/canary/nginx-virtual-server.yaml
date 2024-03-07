@@ -1,9 +1,9 @@
 apiVersion: k8s.nginx.org/v1
 kind: VirtualServer
 metadata:
-  name: canary-prototype
+  name: canary-prototype-v1
 spec:
-  host: proto.dev.argoproj.io
+  host: v1.dev.argoproj.io
   ingressClassName: nginx
   upstreams:
     - name: stable

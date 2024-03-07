@@ -6,7 +6,7 @@ namespace: kiali
 helmCharts:
   - name: kiali-operator
     repo: https://kiali.org/helm-charts
-    version: 1.74.0
+    version: 1.81.0
     releaseName: kiali-operator
     namespace: kiali
     includeCRDs: true

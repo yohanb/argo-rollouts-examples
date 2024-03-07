@@ -6,11 +6,12 @@ spec:
   hosts:
     - canary-prototype-stable.prototype.svc.cluster.local
   http:
-    - name: primary
+    - fault:
+        abort:
+          httpStatus: 500
+          percentage:
+            value:
+              100
       route:
         - destination:
             host: canary-prototype-stable
-          weight: 100
-        - destination:
-            host: canary-prototype-preview
-          weight: 0
