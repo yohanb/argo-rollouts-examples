@@ -3,7 +3,7 @@ kind: VirtualServer
 metadata:
   name: canary-prototype
 spec:
-  host: proto.dev.argoproj.io
+  host: v1.dev.argoproj.io
   ingressClassName: nginx
   upstreams:
     - name: stable

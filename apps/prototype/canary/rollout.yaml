@@ -36,14 +36,14 @@ spec:
     canary:
       canaryService: canary-prototype-preview
       stableService: canary-prototype-stable
-      scaleDownDelaySeconds: 120
+      scaleDownDelaySeconds: 60
       scaleDownDelayRevisionLimit: 1
       trafficRouting:
         istio:
           virtualService:
             name: canary-prototype   # required
             routes:
-              - primary            # optional if there is a single route in VirtualService, required otherwise
+              - stable            # optional if there is a single route in VirtualService, required otherwise
       steps:
       - setWeight: 20
       - setCanaryScale: # scale replicaset to 100% with only 20% traffic

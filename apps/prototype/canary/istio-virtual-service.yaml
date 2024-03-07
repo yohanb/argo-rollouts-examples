@@ -6,7 +6,7 @@ spec:
   hosts:
     - canary-prototype-stable.prototype.svc.cluster.local
   http:
-    - name: primary
+    - name: stable
       route:
         - destination:
             host: canary-prototype-stable
