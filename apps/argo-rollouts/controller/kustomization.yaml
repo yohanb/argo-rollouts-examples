@@ -10,4 +10,4 @@ images:
 
 replicas:
   - name: argo-rollouts
-    count: 0
+    count: 1
