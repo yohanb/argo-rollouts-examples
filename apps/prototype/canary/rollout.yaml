@@ -16,13 +16,13 @@ spec:
     metadata:
       labels:
         app: prototype
-        version: yellow
+        version: green
         app.kubernetes.io/component: canary
         app.kubernetes.io/name: prototype
     spec:
       containers:
       - name: rollouts-demo
-        image: argoproj/rollouts-demo:yellow
+        image: argoproj/rollouts-demo:green
         ports:
         - name: http
           containerPort: 8080
