@@ -3,6 +3,10 @@ kind: Kustomization
 
 namespace: kiali
 
+resources:
+  - cr.yaml
+  - crb.yaml
+
 helmCharts:
   - name: kiali-operator
     repo: https://kiali.org/helm-charts
