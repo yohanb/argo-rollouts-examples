@@ -7,3 +7,9 @@ resources:
 - rollout.yaml
 - istio-virtual-service.yaml
 - nginx-virtual-server.yaml
+- analysis-template.yaml
+- rbac.yaml
+
+images:
+  - name: argoproj/rollouts-demo
+    newTag: green

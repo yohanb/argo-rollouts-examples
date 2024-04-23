@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: wait-for-rollout
+spec:
+  args:
+    - name: rollout-name
+    - name: rollout-namespace
+    - name: rollout-weight-threshold
+  metrics:
+    - name: wait-for-rollout
+      provider:
+        job:
+          spec:
+            template:
+              spec:
+                serviceAccountName: kubectl-argo-rollouts
+                containers:
+                  - name: wait-for-rollout
+                    image: 'ybelval/kubectl-argo-rollouts:latest'
+                    imagePullPolicy: Always
+                    env:
+                      - name: ROLLOUT_NAME
+                        value: "{{ args.rollout-name }}"
+                      - name: ROLLOUT_NAMESPACE
+                        value: "{{ args.rollout-namespace }}"
+                      - name: ROLLOUT_WEIGHT_THRESHOLD
+                        value: "{{ args.rollout-weight-threshold }}"
+                restartPolicy: Never
