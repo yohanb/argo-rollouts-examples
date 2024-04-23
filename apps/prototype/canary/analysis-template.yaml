@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: wait-for-rollout
+spec:
+  args:
+    - name: weight-threshold
+    - name: rollout-name
+    - name: rollout-namespace
+  metrics:
+    - name: wait-for-rollout
+      provider:
+        job:
+          spec:
+            template:
+              spec:
+                serviceAccountName: kubectl-argo-rollouts
+                containers:
+                  - name: wait-for-rollout
+                    image: 'ybelval/kubectl-argo-rollouts:latest'
+                    imagePullPolicy: Always
+                    command: ["/bin/sh", "-c"]
+                    args:
+                      - |
+                        pattern='s/SetWeight:[[:space:]]+([0-9]+)/\1/p'
+                        actualWeight=$(kubectl-argo-rollouts get rollout {{ args.rollout-name }} -n {{ args.rollout-namespace }} | sed -En $pattern)
+                        while [ "$actualWeight" -lt "{{ args.weight-threshold }}" ]; do
+                          echo "Rollout {{ args.rollout-name }} weight $actualWeight is less than threshold {{ args.weight-threshold }}"
+                          echo "waiting..."
+                          sleep 5
+                          actualWeight=$(kubectl-argo-rollouts get rollout {{ args.rollout-name }} -n {{ args.rollout-namespace }} | sed -En $pattern)
+                        done
+                        exit 0
+                restartPolicy: Never
+---
+kind: AnalysisTemplate
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: pass
+spec:
+  metrics:
+    - name: pass
+      count: 1
+      interval: 5s
+      failureLimit: 1
+      provider:
+        job:
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: sleep
+                    image: alpine:3.8
+                    command: [sh, -c]
+                    args: [exit 0]
+                restartPolicy: Never
+            backoffLimit: 0

@@ -60,9 +60,5 @@ spec:
           kind: VirtualService
           jqPathExpressions:
             - .spec.http[].route[].weight
-      syncPolicy:
-        syncOptions:
-          - RespectIgnoreDifferences=true
-        automated:
-          prune: true
+      syncPolicy: {}
 status: {}
