@@ -4,11 +4,13 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - service.yaml
-- rollout.yaml
+- rollout-1.yaml
+- rollout-2.yaml
 - istio-virtual-service.yaml
 - nginx-virtual-server.yaml
 - analysis-template.yaml
 - rbac.yaml
+- experiment.yaml
 
 images:
   - name: argoproj/rollouts-demo
