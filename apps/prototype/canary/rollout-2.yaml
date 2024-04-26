@@ -49,29 +49,27 @@ spec:
       steps:
         - setCanaryScale: # scale replicaset to 100% with only 20% traffic
             weight: 100
-        - pause: {duration: 10}
         - experiment:
             templates:
-              - name: canary-experiment
+              - name: experiment-canary
                 specRef: canary
                 weight: 5
-                service:
-                  portMappings:
-                  - port: 80
-                    containerPort: 8080
-        #        - analysis:
-        #            templates:
-        #              - templateName: wait-for-rollout
-        #            args:
-        #              - name: rollout-name
-        #                value: canary
-        #              - name: rollout-namespace
-        #                valueFrom:
-        #                  fieldRef:
-        #                    fieldPath: metadata.namespace
-        #              - name: rollout-weight-threshold
-        #                value: "20"
-        - pause: {duration: 10}
+              - name: experiment-stable
+                specRef: stable
+                weight: 5
+        - analysis:
+            templates:
+              - templateName: wait-for-rollout
+            args:
+              - name: rollout-name
+                value: canary
+              - name: rollout-namespace
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: rollout-weight-threshold
+                value: "20"
+        - pause: {}
         - setWeight: 20
         - pause: {}
         - setWeight: 40

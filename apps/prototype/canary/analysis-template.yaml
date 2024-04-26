@@ -17,13 +17,12 @@ spec:
                 serviceAccountName: kubectl-argo-rollouts
                 containers:
                   - name: wait-for-rollout
-                    image: 'ybelval/kubectl-argo-rollouts:latest'
-                    imagePullPolicy: Always
-                    env:
-                      - name: ROLLOUT_NAME
-                        value: "{{ args.rollout-name }}"
-                      - name: ROLLOUT_NAMESPACE
-                        value: "{{ args.rollout-namespace }}"
-                      - name: ROLLOUT_WEIGHT_THRESHOLD
-                        value: "{{ args.rollout-weight-threshold }}"
+                    image: 'ybelval/argo-rollouts-analysis:v1.3.1-26aef80'
+                    args:
+                      - --rollout-name
+                      - "{{ args.rollout-name }}"
+                      - --rollout-namespace
+                      - "{{ args.rollout-namespace }}"
+                      - --rollout-weight-threshold
+                      - "{{ args.rollout-weight-threshold }}"
                 restartPolicy: Never
