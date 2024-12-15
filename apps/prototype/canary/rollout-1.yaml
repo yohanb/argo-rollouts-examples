@@ -5,9 +5,7 @@ metadata:
   labels:
     istio-injection: enabled
 spec:
-  replicas: 3
   revisionHistoryLimit: 1
-  progressDeadlineSeconds: 60
   rollbackWindow: # https://argo-rollouts.readthedocs.io/en/stable/features/rollback/
     revisions: 1
   selector:
@@ -22,9 +20,13 @@ spec:
         app.kubernetes.io/component: canary
         app.kubernetes.io/name: prototype
     spec:
+#      initContainers:
+#        - name: init
+#          image: busybox:1.28
+#          command: [ 'sh', '-c', "sleep 1m" ]
       containers:
       - name: rollouts-demo
-        image: argoproj/rollouts-demo:purple
+        image: turo/rollouts-demo:purple
         ports:
         - name: http
           containerPort: 8080
@@ -38,7 +40,7 @@ spec:
     canary:
       canaryService: canary-prototype-preview
       stableService: canary-prototype-stable
-      scaleDownDelaySeconds: 60
+      scaleDownDelaySeconds: 600
       scaleDownDelayRevisionLimit: 1
       trafficRouting:
         istio:
