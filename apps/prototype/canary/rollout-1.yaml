@@ -5,9 +5,7 @@ metadata:
   labels:
     istio-injection: enabled
 spec:
-  replicas: 3
   revisionHistoryLimit: 1
-  progressDeadlineSeconds: 60
   rollbackWindow: # https://argo-rollouts.readthedocs.io/en/stable/features/rollback/
     revisions: 1
   selector:
@@ -38,7 +36,7 @@ spec:
     canary:
       canaryService: canary-prototype-preview
       stableService: canary-prototype-stable
-      scaleDownDelaySeconds: 60
+      scaleDownDelaySeconds: 600
       scaleDownDelayRevisionLimit: 1
       trafficRouting:
         istio:

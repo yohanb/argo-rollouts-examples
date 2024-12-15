@@ -60,5 +60,9 @@ spec:
           kind: VirtualService
           jqPathExpressions:
             - .spec.http[].route[].weight
+        - group: autoscaling
+          kind: HorizontalPodAutoscaler
+          jqPathExpressions:
+            - .spec.minReplicas
       syncPolicy: {}
 status: {}

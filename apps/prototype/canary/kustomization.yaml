@@ -5,7 +5,6 @@ resources:
 - namespace.yaml
 - service.yaml
 - rollout-1.yaml
-- rollout-2.yaml
 - istio-virtual-service.yaml
 - nginx-virtual-server.yaml
 - analysis-template.yaml
@@ -13,4 +12,4 @@ resources:
 
 images:
   - name: argoproj/rollouts-demo
-    newTag: green
+    newTag: purple

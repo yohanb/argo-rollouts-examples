@@ -3,15 +3,13 @@ kind: AppProject
 metadata:
   annotations:
     argocd-autopilot.argoproj-labs.io/default-dest-server: https://kubernetes.default.svc
-    argocd.argoproj.io/sync-options: PruneLast=true
-    argocd.argoproj.io/sync-wave: "-2"
-  name: argo-rollouts
+  name: metrics-server
   namespace: argocd
 spec:
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
-  description: argo-rollouts project
+  description: metrics-server project
   destinations:
   - namespace: '*'
     server: '*'
@@ -21,25 +19,21 @@ spec:
   sourceRepos:
   - '*'
 status: {}
+
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-rollouts
+  name: metrics-server
   namespace: argocd
 spec:
   source:
-    path: apps/argo-rollouts
+    path: apps/metrics-server
     repoURL: https://github.com/yohanb/argo-rollouts-examples.git
     targetRevision: HEAD
-  project: argo-rollouts
+  project: metrics-server
   destination:
-    namespace: argo-rollouts
+    namespace: kube-system
     server: https://kubernetes.default.svc
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-#    automated:
-#      allowEmpty: true
-#      prune: true
-#      selfHeal: true
+    automated: {}
